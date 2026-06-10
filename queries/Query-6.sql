@@ -13,12 +13,12 @@ CREATE OR REPLACE FILE FORMAT FF_TICKS_CSV
   TIMESTAMP_FORMAT='YYYY-MM-DD HH24:MI:SS';
 
 ALTER STORAGE INTEGRATION ATLAS_S3_INT SET STORAGE_ALLOWED_LOCATIONS =
-  ('s3://fidelity-atlas-batch-ram-01/batch/',
-   's3://fidelity-atlas-batch-ram-01/autoingest/');
+  ('s3://fidelity-atlas-batch-xxx-xx/batch/',
+   's3://fidelity-atlas-batch-xxx-xx/autoingest/');
 
 CREATE OR REPLACE STAGE ATLAS_AUTOINGEST_STAGE
   STORAGE_INTEGRATION = ATLAS_S3_INT
-  URL = 's3://fidelity-atlas-batch-ram-01/autoingest/'
+  URL = 's3://fidelity-atlas-batch-xxx-xx/autoingest/'
   FILE_FORMAT = FF_TICKS_CSV;
 
 CREATE OR REPLACE PIPE ATLAS_TICKS_PIPE

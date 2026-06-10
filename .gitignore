@@ -1,0 +1,61 @@
+# --- Generated lab data ---
+data/
+*.csv
+!queries/*.csv
+*.parquet
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.eggs/
+build/
+dist/
+.installed.cfg
+*.egg
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# uv
+.uv/
+
+# --- Testing / coverage ---
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+.nox/
+.mypy_cache/
+.ruff_cache/
+
+# --- Secrets / credentials ---
+# Never commit Snowflake / AWS keys or connection profiles
+*.pem
+*.p8
+*.key
+rsa_key*
+.env
+.env.*
+!.env.example
+secrets.json
+credentials.json
+snowsql_config
+
+# --- Docker ---
+.docker/
+
+# --- Editors / OS ---
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+desktop.ini

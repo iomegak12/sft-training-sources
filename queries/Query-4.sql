@@ -6,7 +6,7 @@ CREATE OR REPLACE STORAGE INTEGRATION ATLAS_S3_INT
   STORAGE_PROVIDER = 'S3'
   ENABLED = TRUE
   STORAGE_AWS_ROLE_ARN = 'arn:aws:iam::034501260759:role/FidelityAtlasSnowflakeRole'
-  STORAGE_ALLOWED_LOCATIONS = ('s3://fidelity-atlas-batch-ram-01/batch/');
+  STORAGE_ALLOWED_LOCATIONS = ('s3://fidelity-atlas-batch-xxx-xx/batch/');
 
 DESC INTEGRATION ATLAS_S3_INT;
 
@@ -16,7 +16,7 @@ CREATE OR REPLACE FILE FORMAT FF_TRADES_CSV
 
 CREATE OR REPLACE STAGE ATLAS_BATCH_STAGE
   STORAGE_INTEGRATION = ATLAS_S3_INT
-  URL = 's3://fidelity-atlas-batch-ram-01/batch/'
+  URL = 's3://fidelity-atlas-batch-xxx-xx/batch/'
   FILE_FORMAT = FF_TRADES_CSV;
 
   LIST @ATLAS_BATCH_STAGE;

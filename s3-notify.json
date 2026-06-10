@@ -1,0 +1,8 @@
+{ "QueueConfigurations":[{
+    "Id":"atlas-snowpipe",
+    "QueueArn":"arn:aws:sqs:ap-south-1:868072837389:sf-snowpipe-AIDA4UHJMKEGVDI62TNHZ-N9u6qK4iotCB24I_tTvd8w",
+    "Events":["s3:ObjectCreated:*"],
+    "Filter":{"Key":{"FilterRules":[
+       {"Name":"prefix","Value":"autoingest/"},
+       {"Name":"suffix","Value":".csv"}]}}
+}]}

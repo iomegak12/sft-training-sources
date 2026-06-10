@@ -1,0 +1,4 @@
+FROM confluentinc/cp-kafka-connect:7.6.0
+
+# Install the Snowflake Kafka sink connector (includes Snowpipe Streaming support)
+RUN confluent-hub install --no-prompt snowflakeinc/snowflake-kafka-connector:2.5.0

@@ -1,0 +1,22 @@
+curl -X POST http://localhost:8083/connectors -H "Content-Type: application/json" -d '{
+  "name": "atlas-exec-sink",
+  "config": {
+    "connector.class": "com.snowflake.kafka.connector.SnowflakeSinkConnector",
+    "tasks.max": "1",
+    "topics": "atlas.executions",
+    "snowflake.url.name": "mqgwzys-gg61299.snowflakecomputing.com:443",
+    "snowflake.user.name": "streaming_user",
+    "snowflake.private.key": "MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQChMezeCtuRs8gGCwSsNzQJUlWFTjYofbOpfbf8SOwogi/rKlwRstNYT6pbO9rbLC9ZpiTUW3mJ4Fc9g80/7xjagy9AaQ66eqvVLPoZu8eTDKvkW6gvvpaLAfo5pnlHPRAa2N8ettFHELf3IjEzoPreFy73jU9nrjzNJXOEaY04sTG7628ob2TsW5K0w+/TzYdCtus3wsUrhQJCEuyaqogs8fxKGtAjlXxPWKhTr47h/xjUtvJ2hM2WgDXbC6+mthXOmEW53/0wXgOZr8CsomigvH+rqLF+Yu+tQsCOx8AUoAidMgdSqiy8q+naVEGCK3IwWQHGPUh7aMSI5uGFBEZDAgMBAAECggEABoFyUt/TTsUXvI6zSJQNyJaHFxM6AlZYau3FACydQ2FFt9ME1j4GY5kLghUfVxsoahDXia6LcDIas0Pfg8YNlbwXqxzSWFpdFwRyr5kxi9DGGzhLyGmDv+Z7h9odKO/g94RrNN0iAyE8m3/IxpGnrlD3N0x/uOqCT7FEQULVTUVhFrOwIB9mBDmN70TUuafdOTpt5B6uFTxnbO83QO0mW20eZBR6RinJo/XwbIa+4KgCDCKhLeewyEDNZTSe/FWw7vM0Lb+XAitg2f9FjCJdOvyFvGW+1HH5ZWLR4hWQIzObLvk+XwiLWWv+ES3kw//ubcijw9b/2YyPh3LeNEHecQKBgQDVX9lLAr/45PKY7bPyJdpht9CPZx9CH3YS4GVhhI1gDM7/kSdcez2PhlYCqYibGnKEUarm1t1RgyWdPNUBTL+mFCiMJxrIzjk8JGXyaoiLOk7C/2A28GfbDcSr2uRTxRNLOwp5PUx8qwymfsUwWB12kSCc74QrMmXdJMizj5AE2wKBgQDBZZPaBvQHsqqtn7FuY3bJrvAfXf0FChNSv5hs+NhpNP8Y3jn5jET5S4TiZsW9WL1jnvPqRwKwDirqHISsIS4o0Y4adgwTZwrWngYApQZ45uNb/bsNQ6r08GKRRquOTjg1PuIHbUGVKl3Jxv7cVEhmgG+CT+wmntI2dvPq36uMuQKBgQCCf5aUC+CBRvUglvChPolrjlJeAkHZ3QgHz3nxxHH6tpq7L3mVVEJ4Tz63bhyAUBKN3qzZdbvyKHWOzy+vFdN4rYeHADufaJEUuWYodwN/s2+MT0f3Ed1S2f7Y5I0UtslwD3H+aIEpFiwsgAf1405Rv7zkfpClIrOuJtshBsKcVQKBgENkFwpRg/Wuv6Ty0cxKopkS+Z+ki8eWxDcAhqfqatb2XbIXthIMW/iW5T5TW7JoWs59FDfd+MTKmw+rUlv8z+3vX9o+qmSUcoVo2WSeHMxCgJWMrAKqQsdJgL9o5d0XyqRbPj4iR0koUzg9vI+gWv5E4RaCrSKkE1JhTwvYVxoZAoGAO6gDqXVRYzwbY3PQgd2/Sm0HTyoc1OMu/aiUTj3aRa/8X6RTuo/pYYAGUBgng3FyM0N6AVDhG16INZxq6wvM/i6K/ubReLoMRGpmD9r1zYYKjuThYpXifLbLFtAo39TLIece4oLFPZAa1zolDwCFTH6bcmIYg/fCrbHCWUnOUbc=",
+    "snowflake.role.name": "ATLAS_ENGINEER",
+    "snowflake.database.name": "FIDELITY_ATLAS",
+    "snowflake.schema.name": "RAW",
+    "snowflake.topic2table.map": "atlas.executions:RAW_EXECUTIONS",
+    "snowflake.ingestion.method": "SNOWPIPE_STREAMING",
+    "buffer.count.records": "100",
+    "buffer.flush.time": "10",
+    "buffer.size.bytes": "1000000",
+    "key.converter": "org.apache.kafka.connect.storage.StringConverter",
+    "value.converter": "org.apache.kafka.connect.json.JsonConverter",
+    "value.converter.schemas.enable": "false"
+  }
+}'

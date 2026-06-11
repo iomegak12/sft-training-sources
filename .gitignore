@@ -21,6 +21,10 @@ venv/
 env/
 ENV/
 
+**/*/logs/
+
+logs/
+
 # uv
 .uv/
 

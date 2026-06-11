@@ -1,0 +1,10 @@
+-- Suspend everything that polls or schedules:
+ALTER TASK FUIDP.RAW.task_update_positions SUSPEND;
+ALTER TASK FUIDP.RAW.task_refresh_valuation SUSPEND;
+ALTER DYNAMIC TABLE FUIDP.ANALYTICS.dt_positions SUSPEND;
+ALTER DYNAMIC TABLE FUIDP.ANALYTICS.dt_portfolio_valuation SUSPEND;
+ALTER WAREHOUSE WH_INGEST SUSPEND; ALTER WAREHOUSE WH_ANALYTICS SUSPEND;
+
+
+
+docker compose down     # Airflow off; volumes persist for Day 3 reuse

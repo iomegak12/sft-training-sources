@@ -1,0 +1,64 @@
+SQL_TRANSFORM_POSITIONS = [
+    """
+    CREATE TABLE IF NOT EXISTS FUIDP.ANALYTICS.positions (
+      account_id    STRING,
+      symbol        STRING,
+      net_quantity  NUMBER,
+      last_trade_ts TIMESTAMP_NTZ,
+      updated_at    TIMESTAMP_NTZ
+    )
+    """,
+    """
+    MERGE INTO FUIDP.ANALYTICS.positions p
+    USING (
+      SELECT account_id, symbol,
+             SUM(IFF(side='BUY', quantity, -quantity)) AS net_quantity,
+             MAX(trade_ts) AS last_trade_ts
+      FROM FUIDP.RAW.trades_stream
+      GROUP BY account_id, symbol
+    ) s
+    ON p.account_id = s.account_id AND p.symbol = s.symbol
+    WHEN MATCHED THEN UPDATE SET
+      net_quantity  = s.net_quantity,
+      last_trade_ts = s.last_trade_ts,
+      updated_at    = CURRENT_TIMESTAMP()
+    WHEN NOT MATCHED THEN INSERT
+      (account_id, symbol, net_quantity, last_trade_ts, updated_at)
+      VALUES (s.account_id, s.symbol, s.net_quantity, s.last_trade_ts, CURRENT_TIMESTAMP())
+    """,
+]
+
+
+
+
+
+SQL_DQ_GATE = [
+    # check 1: positions not empty
+    "SELECT IFF(COUNT(*) > 0, 1, 1/0) AS dq_positions_not_empty "
+    "FROM FUIDP.ANALYTICS.positions",
+    # check 2: no NULL account_id
+    "SELECT IFF(COUNT(*) = 0, 1, 1/0) AS dq_no_null_account "
+    "FROM FUIDP.ANALYTICS.positions WHERE account_id IS NULL",
+    # check 3: no future-dated trades
+    "SELECT IFF(COUNT(*) = 0, 1, 1/0) AS dq_no_future_trades "
+    "FROM FUIDP.ANALYTICS.positions WHERE last_trade_ts > CURRENT_TIMESTAMP()",
+]
+
+
+
+
+
+
+
+SQL_REFRESH_ANALYTICS = """
+CREATE OR REPLACE TABLE FUIDP.ANALYTICS.portfolio_valuation AS
+SELECT p.account_id,
+       SUM(p.net_quantity * m.price) AS market_value
+FROM FUIDP.ANALYTICS.positions p
+JOIN (
+  SELECT symbol, MAX_BY(price, event_ts) AS price
+  FROM FUIDP.STAGING.market_ticks
+  GROUP BY symbol
+) m ON p.symbol = m.symbol
+GROUP BY p.account_id;
+"""

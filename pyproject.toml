@@ -4,5 +4,10 @@ version = "0.1.0"
 requires-python = ">=3.12"
 dependencies = [
     "kafka-python>=2.3.2",
+<<<<<<< HEAD
     "snowflake-snowpark-python>=1.52.0",
+=======
+    "numpy>=2.4.6",
+    "pandas>=3.0.3",
+>>>>>>> 5164b7f6f9a5a7fc0c4a47ac93481de4a26bc99a
 ]
